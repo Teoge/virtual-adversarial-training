@@ -152,7 +152,7 @@ for epoch in range(opt.num_epochs):
                                 optimizer)
 
         if i % 100 == 0:
-            print("Epoch :", epoch, "Iter :", i, "VAT Loss :", v_loss.data[0], "CE Loss :", ce_loss.data[0])
+            print("Epoch :", epoch, "Iter :", i, "VAT Loss :", v_loss.item(), "CE Loss :", ce_loss.item())
 
     if epoch % eval_freq == 0 or epoch + 1 == opt.num_epochs:
 
@@ -160,11 +160,11 @@ for epoch in range(opt.num_epochs):
         x = labeled_train[batch_indices]
         y = labeled_target[batch_indices]
         train_accuracy = eval(model.eval(), Variable(tocuda(x)), Variable(tocuda(y)))
-        print("Train accuracy :", train_accuracy.data[0])
+        print("Train accuracy :", train_accuracy.item())
 
         for (data, target) in test_loader:
             test_accuracy = eval(model.eval(), Variable(tocuda(data)), Variable(tocuda(target)))
-            print("Test accuracy :", test_accuracy.data[0])
+            print("Test accuracy :", test_accuracy.item())
             break
 
 
@@ -176,4 +176,4 @@ for (data, target) in test_loader:
     test_accuracy += n*acc
     counter += n
 
-print("Full test accuracy :", test_accuracy.data[0]/counter)
+print("Full test accuracy :", test_accuracy.item()/counter)
